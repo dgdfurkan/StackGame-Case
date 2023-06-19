@@ -24,7 +24,7 @@ namespace GunduzDev
         public int GridColumnCount = 3;
         public Vector3 Padding = Vector3.zero;
         //public int GemTypeID; // To create same gems
-        private int gemValue;
+        private int _gemValue;
         [Space(10)]
         public List<GemType> GemTypes = new List<GemType>();
 
@@ -41,7 +41,7 @@ namespace GunduzDev
                 {
                     Vector3 position = new Vector3(Padding.x * col, 0, Padding.z * row);
                     GameObject tile = Instantiate(GemTypes[RandomGemNumberGenerator()].GemModel, position, Quaternion.identity);
-                    tile.GetComponent<Gem>().InitilizeGem(GemTypes[gemValue]);
+                    tile.GetComponent<Gem>().InitilizeGem(GemTypes[_gemValue]);
                     tile.transform.parent = transform;
                 }
             }
@@ -51,14 +51,14 @@ namespace GunduzDev
         {
             Vector3 position = new Vector3(vector.x, 0, vector.z);
             GameObject tile = Instantiate(GemTypes[RandomGemNumberGenerator()].GemModel, position, Quaternion.identity);
-            tile.GetComponent<Gem>().InitilizeGem(GemTypes[gemValue]);
+            tile.GetComponent<Gem>().InitilizeGem(GemTypes[_gemValue]);
             tile.transform.parent = transform;
         }
 
         int RandomGemNumberGenerator()
         {
             int random = UnityEngine.Random.Range(0, GemTypes.Count);
-            gemValue = random;
+            _gemValue = random;
             return random;
         }
     }
@@ -86,6 +86,12 @@ namespace GunduzDev
                 //{
                 //    ErrorMessageBox.ShowError("Something wrong about 'GemTypeID', please handle it!");
                 //}
+
+                if(gridManager.GridRowCount <= 0 || gridManager.GridColumnCount <= 0)
+                {
+                    ErrorMessageBox.ShowError("Something wrong about 'GridRowCount' or 'GridColumnCount', please handle it!");
+                }
+
                 gridManager.GenerateGrid();
             }
         }
@@ -109,7 +115,6 @@ namespace GunduzDev
 
         private void OnGUI()
         {
-
             EditorGUILayout.LabelField(errorMessage, EditorStyles.wordWrappedLabel);
             if (GUILayout.Button("OK"))
             {

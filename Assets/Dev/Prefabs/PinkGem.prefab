@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1042815897068889313}
   m_Layer: 0
   m_Name: Gem_Pink
-  m_TagString: Untagged
+  m_TagString: Gem
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -110,7 +110,7 @@ GameObject:
   - component: {fileID: 3707708961663669994}
   m_Layer: 0
   m_Name: PinkGem
-  m_TagString: Untagged
+  m_TagString: Gem
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -143,4 +143,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bfdbefdc82590e438da84d514d0bd8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  capsuleCollider: {fileID: 1042815897068889313}
+  MyGemType:
+    GemName: 
+    StartingPrice: 0
+    GemIcon: {fileID: 0}
+    GemModel: {fileID: 0}
+  _capsuleCollider: {fileID: 1042815897068889313}

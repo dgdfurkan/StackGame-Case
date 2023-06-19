@@ -6,19 +6,14 @@ namespace GunduzDev
 {
 	public class Gem : MonoBehaviour
 	{
-        GemType gemType;
-        [SerializeField] private CapsuleCollider capsuleCollider;
-        private bool isGrowth = false;
+        public GemType MyGemType;
+        [SerializeField] private CapsuleCollider _capsuleCollider;
+        private bool _isGrowth = false;
+        public bool isStack = false;
 
-        private float scaleIncreaseRate = 0.2f;
-        private float targetScale = .25f;
-        private float currentScale = 0f;
-        private float scaleSpeed = 1f;
-
-        public void OnEnable()
-        {
-            
-        }
+        private float _targetScale = .25f;
+        private float _currentScale = 0f;
+        private float _scaleSpeed = 1f;
 
         private void Awake()
         {
@@ -28,44 +23,31 @@ namespace GunduzDev
         public void InitilizeGem(GemType GType)
         {
             gameObject.transform.localScale = Vector3.zero;
-            isGrowth = false;
-            capsuleCollider.enabled = false;
-            gemType = GType;
-            Debug.Log(gemType.StartingPrice);
+            _isGrowth = false;
+            _capsuleCollider.enabled = false;
+            MyGemType = GType;
         }
 
         IEnumerator Growing(float value)
         {
             yield return new WaitForSeconds(value);
 
-            while (currentScale <= 1)
+            while (_currentScale <= 1 && !isStack)
             {
-                currentScale = Mathf.Lerp(currentScale, 1, scaleSpeed * Time.deltaTime);
-                transform.localScale = new Vector3(currentScale, currentScale, currentScale);
+                _currentScale = Mathf.Lerp(_currentScale, 1, _scaleSpeed * Time.deltaTime);
+                transform.localScale = new Vector3(_currentScale, _currentScale, _currentScale);
 
-                if(currentScale >= targetScale) MakeCollectable();
+                if(_currentScale >= _targetScale) MakeCollectable();
 
                 yield return null;
             }
-
-            //MakeCollectable();
         }
 
         private void MakeCollectable()
         {
-            isGrowth = true;
-            capsuleCollider.enabled = true;
+            _isGrowth = true;
+            _capsuleCollider.enabled = true;
             
-        }
-
-        private void OnTriggerEnter(Collider other)
-        {
-            if (other.tag == "Player")
-            {
-                GridManager.Instance.GenerateAfterCollect(transform.position);
-
-                // Stack it
-            }
         }
     }
 }
