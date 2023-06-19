@@ -24,7 +24,6 @@ namespace GunduzDev
         void StartGame()
         {
             totalGold = PlayerPrefs.GetFloat("Gold", 0);
-            Debug.Log("Total Gold is: " + totalGold);
             UIManager.Instance.UpdateGoldText(totalGold);
         }
 
@@ -32,7 +31,6 @@ namespace GunduzDev
         {
             totalGold += value;
             PlayerPrefs.SetFloat("Gold", totalGold);
-            Debug.Log("Total Gold is: " + totalGold);
             UIManager.Instance.UpdateGoldText(totalGold);
         }
 
@@ -43,7 +41,6 @@ namespace GunduzDev
                 if (PlayerPrefs.HasKey(item.GemName))
                 {
                     CollectedDict.Add(item.GemName, PlayerPrefs.GetInt(item.GemName));
-                    Debug.Log("GemName and total: " + PlayerPrefs.GetInt(item.GemName));
                 }
             }
             UIManager.Instance.UpdateGemInformation();
@@ -60,52 +57,6 @@ namespace GunduzDev
             }
             PlayerPrefs.Save();
             UIManager.Instance.UpdateGemInformation();
-        }
-
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.V))
-            {
-                Debug.Log(CollectedDict.Values);
-                Debug.Log(CollectedDict.Keys);
-
-                
-            }
-            if (Input.GetKeyDown(KeyCode.B))
-            {
-                foreach (var kvp in CollectedDict)
-                {
-                    string key = kvp.Key;
-                    int value = kvp.Value;
-
-                    // Anahtar ve deðeri kullanarak iþlemler yapabilirsiniz
-                    Debug.Log("Key: " + key + ", Value: " + value);
-                }
-
-
-            }
-            if (Input.GetKeyDown(KeyCode.N))
-            {
-                int random = UnityEngine.Random.Range(0, 3);
-                string namee = "";
-
-
-                switch (random)
-                {                           
-                    case 0:
-                        namee = "Green";
-                        break;
-                    case 1:
-                        namee = "Pink";
-                        break;
-                    case 2:
-                        namee = "Yellow";
-                        break;
-                }
-
-                CollectedDict.Add(namee, +1);
-
-            }
         }
     }
 }
